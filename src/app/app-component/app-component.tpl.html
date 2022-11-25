@@ -1,0 +1,78 @@
+<div class="app">
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Weather Forecast App</a>
+            </div>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-primary active" ng-click="$ctrl.setDisplayFormat(true)">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> &deg;C
+                </label>
+                <label class="btn btn-success" ng-click="$ctrl.setDisplayFormat(false)">
+                    <input type="radio" name="options" id="option2" autocomplete="off"> &deg;F
+                </label>
+            </div>
+        </div>
+    </nav>
+
+    <div ui-view class="d-flex justify-content-center align-items-center flex-column" >
+        <div class="col-12 col-xl-6">
+            <form class="w-100 d-flex" ng-submit="$ctrl.refresh()">
+                <input class="w-100 my-5" type="text" ng-model="$ctrl.location" placeholder="Please Enter the Country" />
+            </form>
+        </div>
+        <h2 class="error" ng-show="$ctrl.isError && !$ctrl.isLoading">
+            Please try to search correct location!
+        </h2>
+        <div ng-if="$ctrl.isLoading" class="w-75" >
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                    aria-valuemax="100" style="width: 100%"></div>
+            </div>
+        </div>
+
+        <div ng-if="$ctrl.isLoaded" class="temperature-wrapper">
+            <h1>Today's temperature in
+                <span class="text-success">{{$ctrl.weatherData.name}}</span> is
+                <span class="text-primary" ng-if="$ctrl.isCelsius">{{$ctrl.weatherData.main.temp | number:0}}&deg;C</span>
+                <span class="text-primary" ng-if="!$ctrl.isCelsius">{{$ctrl.weatherData.main.temp + 32| number:0}}&deg;F</span>
+            </h1>
+        </div>
+        
+        <div ng-if="$ctrl.isLoaded" class="row w-100 px-xl-5">
+            <div class="card col-8 col-md-3 col-lg-2 cool" style="height: 200px" >
+                
+                <p>Min Temperature</p>
+                <h3 ng-if="$ctrl.isCelsius">{{$ctrl.weatherData.main.temp_min | number:0}}&deg;C</h3>
+                <h3 ng-if="!$ctrl.isCelsius">{{$ctrl.weatherData.main.temp_min + 32  | number:0}}&deg;F</h3>
+                
+            </div>
+            <div class="card col-8 col-md-3 col-lg-2 cool" style="height: 200px" >
+                
+                <p>Max Temperature</p>
+                <h3 ng-if="$ctrl.isCelsius">{{$ctrl.weatherData.main.temp_max | number:0}}&deg;C</h3>
+                <h3 ng-if="!$ctrl.isCelsius">{{$ctrl.weatherData.main.temp_max +32 | number:0}}&deg;F</h3>
+                
+            </div>
+            <div class="card col-8 col-md-3 col-lg-2 cool"style="height: 200px"  >
+                
+                <p>Pressure</p>
+                <h3 >{{$ctrl.weatherData.main.pressure}}</h3>
+                
+            </div>
+            <div class="card col-8 col-md-3 col-lg-2 cool" style="height: 200px" >
+                
+                <p>Humidity</p>
+                <h3 >{{$ctrl.weatherData.main.humidity}}</h3>
+                
+            </div>
+            <div class="card col-8 col-md-3 col-lg-2 cool" style="height: 200px" >
+                
+                <p>Wind Speed</p>
+                <h3 >{{$ctrl.weatherData.wind.speed}}</h3>
+                <p>Gust</p>
+                <h3 >{{$ctrl.weatherData.wind.gust}}</h3>
+            </div>
+        </div>
+    </div>
+</div>
